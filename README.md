@@ -1,6 +1,6 @@
 # Subdomain Scanner
 
-Subdomain Enumerator is a simple tool to retrieve a list of subdomains for a given domain along with their status codes.
+Subdomain Scanner is a simple tool to retrieve a list of subdomains for a given domain along with their status codes.
 
 ## Prerequisites
 - `api_key`: Your domain registrar API key.
