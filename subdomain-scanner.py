@@ -1,37 +1,28 @@
 import requests
 
-# input the domain to scan subdomains
-domain= "tokopedia.com"
+api_key = ' '
+api_secret = ' '
+domain = ' '
 
-# read all subdomains from wordlists
-file= open("subdomains.txt")
+def get_subdomains(api_key, api_secret, domain):
+    url = f'https://api.godaddy.com/v1/domains/{domain}/records'
+    headers = {'Authorization': f'sso-key {api_key}:{api_secret}'}
+    response = requests.get(url, headers=headers)
 
-# read all content 
-content= file.read()
+    print(f"API Response Status Code: {response.status_code}")
 
-# split to create a new lines
-subdomains= content.splitlines()
-
-# a list of discovered subdomains
-discovered_subdomains = []
-for subdomain in subdomains:
-
-# construct the url for subdomain
-    url= f"http://{subdomain}.{domain}"
-    
-# test to get the HTTP response from server
-    try: 
-        request.get(url)
-      
-# if this raises an error, that means the subdomain does not exist and just pass the process
-    except Exception:
-        pass
+    if response.status_code == 200:
+        data = response.json()
+        subdomains = [record['name'] for record in data if record['type'] == 'A']
+        return subdomains
     else:
-        print("[+] Discovered subdomain", url)
-# append the discovered subdomain
-        discovered_subdomains.append()
+        print(f"Error: {response.status_code}")
+        try:
+            error_message = response.json().get('message')
+            print(f"Error Message: {error_message}")
+        except:
+            pass
+        return []
 
-# save the discovered subdomains into a file
-with open("result", "w") as f:
-    for subdomain in discovered_subdomains:
-        print(subdomain, file=f)
+subdomains = get_subdomains(api_key, api_secret, domain)
+print(f"Subdomains for {domain}: {subdomains}")
