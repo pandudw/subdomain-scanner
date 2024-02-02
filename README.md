@@ -15,7 +15,7 @@ Subdomain Scanner is a simple tool to retrieve a list of subdomains for a given 
     ```
 2. **Run the Script:**
     ```bash
-    python subdomain_enumerator.py
+    python3 subdomain_enumerator.py
     ```
 3. **Review Results:**
     The script will print a list of subdomains along with their status codes.
